@@ -6,12 +6,13 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText edPeso,edAltura;
+    EditText edPeso,edAltura;
 
-    double imc;
+    //double imc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,14 +23,23 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void calcular(View view){
-        double peso = Double.parseDouble(edPeso.getText().toString());
-        double altura = Double.parseDouble(edAltura.getText().toString());
+        string peso = edPeso.getText().toString();
+        string altura = edAltura.getText().toString();
 
-        imc = peso/(altura * altura);
+        Intent i = new getIntent();
+        Bundle b = new Bundle();
 
-        String imcS = imc.toString();
+        b.putString("peso", peso);
+        b.putString("Altura", altura);
+        i.putExtras(b);
+        startActivity(i);
 
-        Log.d(tag:"i", imcS);
-        Toast.makeText(context this, imcS, Toast.LENGTH_SHORT).show();
+        //imc = peso/(altura * altura);
+
+        //String imcS = imc.toString();
+
+        //Log.d(tag:"i", imcS);
+        //Toast.makeText(context this, imcS, Toast.LENGTH_SHORT).show();
     }
+
 }
