@@ -2,44 +2,51 @@ package com.example.imc2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
+
 import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText edPeso,edAltura;
-
-    //double imc;
+    EditText txtAltura, txtPeso, txtNome;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        edPeso=findViewById(R.id.edPeso);
-        edAltura=findViewById(R.id.edAltura);
+        txtAltura = findViewById(R.id.txtAltura);
+        txtPeso = findViewById(R.id.txtPeso);
+        txtNome = findViewById(R.id.txtNome);
     }
 
-    public void calcular(View view){
-        string peso = edPeso.getText().toString();
-        string altura = edAltura.getText().toString();
+    public void calcularIMC(View view){
+        String altura = txtAltura.getText().toString();
+        String peso = txtPeso.getText().toString();
+        String nome = txtNome.getText().toString();
 
-        Intent i = new getIntent();
+        Intent intent = new Intent(getApplicationContext(), ResultadoIMC.class);
         Bundle b = new Bundle();
 
+        b.putString("altura", altura);
         b.putString("peso", peso);
-        b.putString("Altura", altura);
-        i.putExtras(b);
-        startActivity(i);
+        b.putString("nome", nome);
+        intent.putExtras(b);
+        startActivity(intent);
 
-        //imc = peso/(altura * altura);
+        //DecimalFormat df = new DecimalFormat("##.##");
 
-        //String imcS = imc.toString();
+        //double imc = peso/ (altura*altura);
+        //String resp = df.format(imc);
 
-        //Log.d(tag:"i", imcS);
-        //Toast.makeText(context this, imcS, Toast.LENGTH_SHORT).show();
+        //Log.d("i", resp);
+        //Toast.makeText(this, resp,Toast.LENGTH_SHORT).show();
+
     }
-
 }

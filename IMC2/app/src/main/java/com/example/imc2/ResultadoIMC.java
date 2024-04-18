@@ -1,30 +1,81 @@
 package com.example.imc2;
 
-import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
+
+import android.annotation.SuppressLint;
+import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import java.text.DecimalFormat;
 
 public class ResultadoIMC extends AppCompatActivity {
 
-    protected void onCreat(Bundle savedInstanceState){
+    TextView txtResulIMC, txtNome, txtPeso, txtAlt;
+    ImageView imgResul;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //setContentView(R.layout.activity_resultado_imc);
-        //Asociação objeto View da interface a variável local
-        //edAltura = findViewById(R.id.edresultadoaltura);
-        //edPeso = findViewById(R.id.edresultadoimc);
+        setContentView(R.layout.activity_imcresultado);
 
-        //Recuperando dados da intenção
-        //Intent i = getIntent();
-        //Bundle b = i.getExtras();
+        txtResulIMC = findViewById(R.id.txtIMC); // associei a varia´vel local ao view na tela
+        txtNome = findViewById(R.id.lblNome);
+        txtAlt = findViewById(R.id.lblAltura);
+        txtPeso = findViewById(R.id.lblPeso);
+        imgResul = findViewById(R.id.imgResul);
 
-        //Float peso, altura, imc;
-        //peso = b.getFloat("peso");
-        //altura = b.getFloat("altura");
-        //imc = peso/(altura*altura);
+        Intent i = getIntent(); //recuperamos a intenção que veio atividade anterior
+        Bundle bundle = i.getExtras(); //recuperamos os dados que acompanham
+        String nomeS = bundle.getString("nome");
+        String alturaS = bundle.getString("altura");
+        String pesoS = bundle.getString("peso");
 
-        //Definindo valores
-        //edAltura.setText(altura.toString());
-        //edPeso.setText(peso.toString());
-        //edIMC.setText(imc.toString());
+        txtNome.setText(nomeS);
+        txtPeso.setText(pesoS);
+        txtAlt.setText(alturaS);
+
+        Double altura = Double.parseDouble(alturaS);
+        Double peso = Double.parseDouble(pesoS);
+
+        DecimalFormat df = new DecimalFormat("##.##");
+
+        double imc = (peso/(altura*altura));
+        String resp = df.format(imc);
+
+        txtResulIMC.setText("IMC: "+resp);
+
+        Log.d("i", resp);
+        Toast.makeText(this, resp,Toast.LENGTH_SHORT).show();
+
+
+        //Integer imc = Integer.parseInt(s);
+
+        //Log.d("Valor do IMC:", bundle.getString("valorIMC"));
+
+        if (imc<=18.5){
+            imgResul.setImageResource(R.drawable.abaixopeso);
+        }
+        if (imc>=18.5 && imc<=24.9) {
+            imgResul.setImageResource(R.drawable.normal);
+        }
+        if (imc>=25 && imc<=29.9) {
+            imgResul.setImageResource(R.drawable.sobrepeso);
+        }
+        if (imc>=30 && imc<=34.9) {
+            imgResul.setImageResource(R.drawable.obesidade1);
+        }
+        if (imc>=35 && imc<=39.9) {
+            imgResul.setImageResource(R.drawable.obesidade2);
+        }
+        if (imc>40) {
+            imgResul.setImageResource(R.drawable.obesidade3);
+        }
+
     }
 }
